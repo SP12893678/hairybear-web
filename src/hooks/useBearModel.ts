@@ -10,7 +10,7 @@ import * as THREE from 'three';
 import type { GLTF } from 'three-stdlib';
 import type { ActionName, LoadingStatus } from '@/types/bear.types';
 
-const MODEL_PATH = '/assets/models/hairybear/hairybear.gltf';
+const MODEL_PATH = `${import.meta.env.BASE_URL}assets/models/hairybear/hairybear.gltf`;
 
 export interface UseBearModelReturn {
   model: THREE.Group | null;
