@@ -27,5 +27,5 @@ dist-ssr
 .env*
 !.env.example
 
-# Large model assets
-public/assets/models/
+# Large model assets (removed to deploy to GitHub Pages)
+# public/assets/models/
