@@ -57,7 +57,7 @@ export function BearModel({
       {/* Lighting based on performance tier */}
       {performanceTier === 'high' && (
         <>
-          <directionalLight position={[5, 10, 5]} intensity={2} castShadow />
+          <directionalLight position={[5, 10, 5]} intensity={2} />
           <directionalLight position={[-5, 5, -5]} intensity={1} />
         </>
       )}
@@ -68,11 +68,11 @@ export function BearModel({
         </>
       )}
       {performanceTier === 'low' && (
-        <directionalLight position={[5, 10, 5]} intensity={1.5} />
+        <directionalLight position={[5, 10, 5]} intensity={2} />
       )}
 
-      {/* Ambient light for all tiers - increased for better visibility */}
-      <ambientLight intensity={1.2} />
+      {/* Ambient light - higher for low tier to compensate for single light source */}
+      <ambientLight intensity={performanceTier === 'low' ? 1.5 : 1.2} />
     </group>
   );
 }

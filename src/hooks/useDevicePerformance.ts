@@ -68,7 +68,7 @@ export function useDevicePerformance(): UseDevicePerformanceReturn {
     canvas.remove();
   }, []);
 
-  const targetFPS = tier === 'low' ? 18 : 30;
+  const targetFPS = tier === 'low' ? 30 : tier === 'medium' ? 30 : 60;
   const pixelRatio = Math.min(2, window.devicePixelRatio || 1);
 
   return {

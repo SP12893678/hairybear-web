@@ -96,9 +96,13 @@ function App() {
         <ErrorBoundary>
           <Canvas
             camera={{ position: [0, 1, 8], fov: 50 }}
-            dpr={tier === 'high' ? 2 : 1}
+            dpr={deviceType === 'mobile' ? 1 : tier === 'high' ? 1.5 : 1}
             frameloop="always"
-            gl={{ antialias: true, alpha: true }}
+            gl={{
+              antialias: tier === 'high',
+              alpha: true,
+              powerPreference: deviceType === 'mobile' ? 'low-power' : 'high-performance'
+            }}
             performance={{ min: 0.5 }}
           >
             <Suspense fallback={null}>
