@@ -4,9 +4,7 @@
  * Feature: 001-3d-bear-web-app
  */
 
-import { useEffect, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
+import { useEffect } from 'react';
 import { useBearModel } from '@/hooks/useBearModel';
 import type { ActionName, PerformanceTier } from '@/types/bear.types';
 
@@ -29,7 +27,7 @@ export function BearModel({
   onLoadComplete,
   onLoadError
 }: BearModelProps) {
-  const { model, mixer, status, error, playAnimation, groupRef } = useBearModel();
+  const { model, status, error, playAnimation, groupRef } = useBearModel();
 
   // Handle load complete/error
   useEffect(() => {

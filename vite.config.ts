@@ -11,5 +11,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/hairybear-web/', // GitHub Pages project path
+  base: '/', // Custom domain (hairybear.me)
 })
