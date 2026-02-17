@@ -61,7 +61,7 @@ function App() {
       )}
 
       {/* Prism Background - FR-002, FR-008 */}
-      <div className="absolute inset-0" style={{ transform: 'rotateX(180deg)' }}>
+      {/* <div className="absolute inset-0" style={{ transform: 'rotateX(180deg)' }}>
         <Prism
           animationType="rotate"
           timeScale={1}
@@ -74,7 +74,7 @@ function App() {
           glow={1}
           offset={{y: -200}}
         />
-      </div>
+      </div> */}
 
       <div className="absolute inset-0">
         <Prism
