@@ -69,7 +69,6 @@ export function useBearModel(): UseBearModelReturn {
     // Play new animation with fade in (500ms transition - SC-003)
     action.reset().fadeIn(0.5).play();
     action.setLoop(THREE.LoopRepeat, Infinity); // Continuous loop per FR-009
-    action.timeScale = 0.5; // Slower speed for better viewing
   };
 
   const stopAllAnimations = () => {

@@ -183,10 +183,43 @@
   }
 }
 
+@keyframes text-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.2),
+      0 0 30px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 40px rgba(255, 255, 255, 0.4),
+      0 0 60px rgba(255, 255, 255, 0.2),
+      0 0 80px rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes text-shimmer {
+  0% {
+    opacity: 0.3;
+    transform: translateY(0) scale(1.05);
+  }
+  50% {
+    opacity: 0.15;
+    transform: translateY(-3px) scale(1.08);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateY(0) scale(1.05);
+  }
+}
+
 @theme {
   --animate-pulse-slow: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-ghost-left: ghost-left 1.5s ease-in-out infinite;
   --animate-ghost-right: ghost-right 1.5s ease-in-out infinite;
+  --animate-text-glow: text-glow 2s ease-in-out infinite;
+  --animate-text-shimmer: text-shimmer 3s ease-in-out infinite;
 }
 
 @layer base {
@@ -207,5 +240,11 @@
   }
   .animate-ghost-right {
     animation: var(--animate-ghost-right);
+  }
+  .animate-text-glow {
+    animation: var(--animate-text-glow);
+  }
+  .animate-text-shimmer {
+    animation: var(--animate-text-shimmer);
   }
 }

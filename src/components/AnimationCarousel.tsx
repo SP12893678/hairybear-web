@@ -49,8 +49,10 @@ export function AnimationCarousel({
     }
   };
 
-  const buttonSize = deviceType === 'mobile' ? 'w-8 h-8' : 'w-10 h-10';
+  // Mobile needs larger buttons for better touch targets
+  const buttonSize = deviceType === 'mobile' ? 'w-14 h-14' : 'w-10 h-10';
   const textSize = deviceType === 'mobile' ? 'text-lg' : 'text-2xl';
+  const minWidth = deviceType === 'mobile' ? 'min-w-[180px]' : 'min-w-[250px]';
 
   return (
     <div
@@ -136,22 +138,56 @@ export function AnimationCarousel({
         </button>
 
         {/* Animation Name */}
-        <div className="text-center min-w-[250px]">
+        <div className={cn('text-center relative', minWidth)}>
+          {/* Ghost text layers - shimmer effect */}
           <p
             className={cn(
-              'text-white font-bold tracking-wide uppercase',
+              'text-white font-bold tracking-wide uppercase absolute inset-0 animate-text-shimmer',
               textSize
             )}
             style={{
-              textShadow: '0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3)',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              letterSpacing: '0.05em',
+              opacity: 0.3,
+              filter: 'blur(2px)'
+            }}
+            aria-hidden="true"
+          >
+            {currentAnimation?.displayName || 'Loading...'}
+          </p>
+          <p
+            className={cn(
+              'text-white font-bold tracking-wide uppercase absolute inset-0 animate-text-shimmer',
+              textSize
+            )}
+            style={{
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              letterSpacing: '0.05em',
+              opacity: 0.2,
+              filter: 'blur(4px)',
+              animationDelay: '1s'
+            }}
+            aria-hidden="true"
+          >
+            {currentAnimation?.displayName || 'Loading...'}
+          </p>
+
+          {/* Main text with glow animation */}
+          <p
+            className={cn(
+              'text-white font-bold tracking-wide uppercase relative animate-text-glow',
+              textSize
+            )}
+            style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               letterSpacing: '0.05em'
             }}
           >
             {currentAnimation?.displayName || 'Loading...'}
           </p>
+
           <p
-            className="text-white/70 text-sm mt-2 font-medium"
+            className="text-white/70 text-sm mt-2 font-medium relative"
             style={{
               textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
             }}

@@ -30,7 +30,6 @@ export function BearModel({
   onLoadError
 }: BearModelProps) {
   const { model, mixer, status, error, playAnimation, groupRef } = useBearModel();
-  const [opacity, setOpacity] = useState(0); // Fade-in animation state (T034)
 
   // Handle load complete/error
   useEffect(() => {
@@ -42,47 +41,12 @@ export function BearModel({
     }
   }, [status, error, onLoadComplete, onLoadError]);
 
-  // Fade in on load (T034)
-  useEffect(() => {
-    if (status === 'loaded') {
-      // Start fade in after a brief delay
-      const timer = setTimeout(() => setOpacity(1), 100);
-      return () => clearTimeout(timer);
-    }
-  }, [status]);
-
   // Play animation when prop changes
   useEffect(() => {
     if (status === 'loaded') {
       playAnimation(animation);
     }
   }, [animation, status, playAnimation]);
-
-  // Update mixer and opacity animation on each frame
-  useFrame((_state, delta) => {
-    // Use actual delta for smooth animation, cap at 0.1 to prevent huge jumps
-    const cappedDelta = Math.min(delta, 0.1);
-    mixer?.update(cappedDelta);
-
-    // Smooth fade-in animation (T034)
-    if (groupRef.current) {
-      groupRef.current.traverse((child) => {
-        // Check if child has material property (Mesh objects)
-        if ('material' in child && child.material) {
-          const material = child.material as THREE.Material;
-          if (!material.transparent) {
-            material.transparent = true;
-          }
-          if ('opacity' in material) {
-            (material as THREE.MeshStandardMaterial).opacity = Math.min(
-              (material as THREE.MeshStandardMaterial).opacity + delta * 2, // Fade in over ~0.5s
-              opacity
-            );
-          }
-        }
-      });
-    }
-  });
 
   if (status !== 'loaded' || !model) {
     return null; // Loading handled by parent

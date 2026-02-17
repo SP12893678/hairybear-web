@@ -31,7 +31,14 @@ function App() {
 
   // Calculate bear scale based on device type (FR-011, T023)
   // Reduced base scale to fit model better in viewport
-  const bearScale = deviceType === 'mobile' ? 0.35 : deviceType === 'tablet' ? 0.32 : 0.4;
+  const bearScale = deviceType === 'mobile' ? 0.28 : deviceType === 'tablet' ? 0.32 : 0.4;
+
+  // Calculate bear Y position based on device type - mobile needs higher position
+  const bearYPosition = deviceType === 'mobile' ? -1.5 : deviceType === 'tablet' ? -1.8 : -2;
+
+  // Calculate Prism scale based on device type - mobile needs smaller scale to show full background
+  const prismBaseWidth = deviceType === 'mobile' ? 3.5 : deviceType === 'tablet' ? 4.5 : 5.5;
+  const prismScale = deviceType === 'mobile' ? 2.2 : deviceType === 'tablet' ? 2.8 : 3.6;
 
   // Handle animation selection (T019)
   const handleAnimationSelect = (index: number) => {
@@ -54,17 +61,33 @@ function App() {
       )}
 
       {/* Prism Background - FR-002, FR-008 */}
+      <div className="absolute inset-0" style={{ transform: 'rotateX(180deg)' }}>
+        <Prism
+          animationType="rotate"
+          timeScale={1}
+          height={3.5}
+          baseWidth={prismBaseWidth}
+          scale={prismScale}
+          hueShift={0}
+          colorFrequency={3}
+          noise={0}
+          glow={1}
+          offset={{y: -200}}
+        />
+      </div>
+
       <div className="absolute inset-0">
         <Prism
           animationType="rotate"
           timeScale={0.5}
           height={3.5}
-          baseWidth={5.5}
-          scale={3.6}
+          baseWidth={prismBaseWidth}
+          scale={prismScale}
           hueShift={0}
           colorFrequency={1}
           noise={0}
           glow={1}
+          offset={{y: -50}}
         />
       </div>
 
@@ -74,12 +97,15 @@ function App() {
           <Canvas
             camera={{ position: [0, 1, 8], fov: 50 }}
             dpr={tier === 'high' ? 2 : 1}
+            frameloop="always"
+            gl={{ antialias: true, alpha: true }}
+            performance={{ min: 0.5 }}
           >
             <Suspense fallback={null}>
               <BearModel
                 animation={currentAnimation.name}
                 scale={bearScale}
-                position={[0, -2, 0]}
+                position={[0, bearYPosition, 0]}
                 targetFPS={targetFPS}
                 performanceTier={tier}
                 onLoadComplete={() => setIsModelLoading(false)}
